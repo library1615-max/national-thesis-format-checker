@@ -1455,13 +1455,22 @@ body{background:radial-gradient(780px 430px at 8% 2%,rgba(56,189,248,.20),transp
 const TOKEN_ISSUE_URL = "https://check.miracle-mind.org/issue";
 const CHATGPT_URL = "https://chatgpt.com/";
 
+const REQUIRED_RULESET_ID =
+  "THESIS-MASTER-20260716-V1";
+
 function buildStartPrompt(promptUrl) {
   return `請先完整讀取下列系統檢核設定：
 
 ${promptUrl}
 
-讀取成功後，請先確認：
-「已成功載入小論文檢核設定」
+讀取成功後，必須先確認規則內容中存在完全相同的識別碼：
+
+RULESET_ID: ${REQUIRED_RULESET_ID}
+
+只有在完整讀取上述系統檢核設定，且確認 RULESET_ID 完全一致後，才可繼續。
+
+確認成功時，請先回覆：
+「已成功載入小論文檢核設定（${REQUIRED_RULESET_ID}）」
 
 接著：
 
@@ -1473,7 +1482,21 @@ PDF 讀取完成後，最後一行必須顯示：
 
 如果本則訊息尚未附上 PDF，則請等待使用者上傳 PDF。
 
-如果無法完整讀取上述系統檢核設定，請立即停止檢核並明確告知我，不得自行推測、補足或使用其他規則替代。`;
+【強制停止條件】
+
+如果發生以下任何情況：
+
+1. 無法完整讀取上述系統檢核設定；
+2. 找不到 RULESET_ID；
+3. RULESET_ID 不是 ${REQUIRED_RULESET_ID}；
+4. 規則網址已逾期、失效或讀取不完整；
+5. 無法確認已取得完整規則內容；
+
+必須立即停止檢核並明確告知使用者重新取得新的啟動指令。
+
+不得自行推測、補足或使用模型既有知識替代規則。
+不得自行建立、重排、改寫或猜測第 1～19 項檢核內容。
+不得在規則驗證失敗時繼續讀取或檢核 PDF。`;
 }
 
 document.getElementById("yearNow").textContent = new Date().getFullYear();
