@@ -1122,6 +1122,380 @@ body{background:radial-gradient(780px 430px at 8% 2%,rgba(56,189,248,.20),transp
 #termsAgree:checked + span{background:rgba(255,255,255,.18)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important}
 @media(max-width:640px){.hero{border-radius:22px}.heroTitle{font-size:25px}}
 </style>
+
+<style id="museumHomepageTheme">
+/* =========================================================
+   MUSEUM HOMEPAGE THEME
+   僅作用於首頁前三段與主要檢核入口。
+   後方工具區沿用原有結構與功能。
+   ========================================================= */
+:root{
+  --museum-navy:#173452;
+  --museum-gold:#b8893f;
+  --museum-gold-dark:#8e6528;
+  --museum-cream:#fbf5e9;
+  --museum-paper:#fffdf8;
+  --museum-line:#ddc49a;
+  --museum-red:#c73b2d;
+  --museum-ink:#26384c;
+  --museum-shadow:0 18px 44px rgba(78,58,31,.14);
+}
+
+/* 首頁整體背景：只增加學術殿堂氣氛，不改工具區元件規則 */
+body{
+  background:
+    linear-gradient(rgba(255,252,246,.94),rgba(255,252,246,.96)),
+    url("./images/five-steps-study-hall.png") center top / cover fixed no-repeat;
+  color:var(--museum-ink);
+}
+.wrap{
+  max-width:1180px;
+  padding-top:0;
+}
+
+/* 原本頂部標題列改為精緻導覽感 */
+.topbar{
+  padding:16px 6px 14px;
+  border-bottom:1px solid rgba(184,137,63,.20);
+}
+.siteTitle{
+  color:var(--museum-navy)!important;
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  letter-spacing:.08em;
+}
+.titleBox .siteSub{
+  color:#6c675f!important;
+}
+
+/* ---------- 01 Museum Hero ---------- */
+.introBanner{
+  margin-top:0;
+  min-height:520px;
+  border-radius:0 0 30px 30px;
+  background:
+    linear-gradient(90deg,
+      rgba(255,252,245,.98) 0%,
+      rgba(255,252,245,.90) 34%,
+      rgba(255,252,245,.34) 56%,
+      rgba(255,252,245,.08) 100%),
+    url("./images/hero-museum-gallery.png") center / cover no-repeat!important;
+  border:1px solid rgba(184,137,63,.20)!important;
+  box-shadow:var(--museum-shadow)!important;
+  position:relative;
+  overflow:hidden;
+}
+.introBanner:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(115,78,31,.06));
+}
+.introInner{
+  position:relative;
+  z-index:1;
+  min-height:520px;
+  padding:62px 58px!important;
+  display:flex!important;
+  justify-content:flex-start;
+  align-items:center!important;
+}
+.introImg{display:none!important;}
+.introText{
+  max-width:540px;
+  text-align:left!important;
+}
+.introText:before{
+  content:"ACADEMIC FORMAT CHECK";
+  display:block;
+  margin-bottom:12px;
+  color:var(--museum-gold-dark);
+  font-size:12px;
+  letter-spacing:.24em;
+  font-weight:900;
+}
+.introText h2{
+  margin:0 0 18px!important;
+  color:var(--museum-navy)!important;
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:48px!important;
+  line-height:1.35;
+  letter-spacing:.06em;
+  max-width:480px;
+}
+.introText h2:before{
+  content:"讓你的小論文\A更完整、更專業";
+  white-space:pre;
+}
+.introText h2{
+  font-size:0!important;
+}
+.introText h2:before{
+  font-size:48px;
+}
+.introText p{
+  color:#445468!important;
+  font-size:17px!important;
+  line-height:1.9!important;
+  max-width:500px;
+}
+.introText p:nth-of-type(1){
+  font-weight:900!important;
+  color:var(--museum-navy)!important;
+}
+.introText p:nth-of-type(1)::before{
+  content:"全國高中職小論文格式自我檢核輔助系統";
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+}
+.introText p:nth-of-type(1){
+  font-size:0!important;
+}
+.introText p:nth-of-type(1)::before{font-size:20px;}
+.introText p:nth-of-type(2){
+  font-size:0!important;
+  margin-top:10px!important;
+}
+.introText p:nth-of-type(2)::before{
+  content:"透過 AI 技術，協助依文件可見內容進行格式自我檢核，提供學習參考，讓研究成果以更好的樣貌呈現。";
+  font-size:16px;
+}
+.introHint{
+  margin-top:22px!important;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 22px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#c69a52,#a97831);
+  color:#fff!important;
+  box-shadow:0 12px 28px rgba(143,95,33,.23);
+  font-size:16px!important;
+}
+.introHint:before{content:"↓";}
+
+/* ---------- 02 必讀區：殿堂式說明 ---------- */
+.warnStrip{
+  margin-top:24px!important;
+  border-radius:26px!important;
+  padding:24px 28px!important;
+  background:
+    linear-gradient(rgba(255,253,248,.93),rgba(255,253,248,.95)),
+    url("./images/must-read-museum-hall.png") center / cover no-repeat!important;
+  border:1px solid rgba(184,137,63,.24)!important;
+  box-shadow:var(--museum-shadow)!important;
+}
+.warnTitle{
+  justify-content:center;
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  color:var(--museum-navy)!important;
+  font-size:30px!important;
+  letter-spacing:.08em!important;
+}
+.warnTitle:before{
+  content:"IMPORTANT";
+  display:block;
+  position:absolute;
+  transform:translateY(-28px);
+  color:var(--museum-gold);
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:.24em;
+}
+.warnBody{
+  max-width:920px;
+  margin:10px auto!important;
+  text-align:center;
+  color:#56616b!important;
+  line-height:1.9!important;
+}
+
+/* 條款區：維持美術館視覺，但恢復原本單欄閱讀結構 */
+.termsSection{
+  margin-top:14px!important;
+  border-radius:26px!important;
+  background:rgba(255,253,248,.97)!important;
+  border:1px solid rgba(184,137,63,.22)!important;
+  box-shadow:var(--museum-shadow)!important;
+  padding:28px!important;
+}
+
+.termsTitle{
+  text-align:center;
+  color:var(--museum-navy)!important;
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:28px!important;
+}
+
+.termsHint{
+  max-width:880px;
+  margin:10px auto 22px!important;
+  text-align:center;
+}
+
+.termsBody{
+  display:block!important;
+  margin-top:10px;
+  color:#0f172a;
+  font-size:16px;
+  font-weight:650;
+  line-height:1.85;
+}
+
+.termsBody > p:first-child{
+  margin:0 0 18px!important;
+  padding:16px 18px;
+  text-align:left;
+  border:1px solid rgba(184,137,63,.16);
+  border-radius:16px;
+  background:#fffaf1;
+}
+
+.termsBody h3{
+  margin:22px 0 8px!important;
+  padding:0!important;
+  color:var(--museum-navy);
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:20px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+}
+
+.termsBody ul{
+  margin:6px 0 14px 22px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+}
+
+.termsBody li{
+  margin:7px 0!important;
+}
+
+.termsBody > li.dangerText{
+  display:list-item;
+  margin-left:22px!important;
+  padding:0!important;
+  list-style-position:outside!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+}
+
+.termsBody > li.dangerText:last-of-type{
+  padding-bottom:0!important;
+  border:0!important;
+  border-radius:0!important;
+}
+
+/* ---------- 03 五步驟 ---------- */
+.howCard{
+  margin-top:24px!important;
+  border-radius:26px!important;
+  padding:30px 28px 34px!important;
+  background:
+    linear-gradient(rgba(255,253,248,.94),rgba(255,253,248,.96)),
+    url("./images/five-steps-study-hall.png") center / cover no-repeat!important;
+  border:1px solid rgba(184,137,63,.22)!important;
+  box-shadow:var(--museum-shadow)!important;
+}
+.howTitle{
+  text-align:center;
+  color:var(--museum-navy)!important;
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:32px!important;
+}
+.howHint{text-align:center;margin-bottom:18px!important;}
+.howSteps{
+  display:grid!important;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px!important;
+}
+.howStep{
+  min-height:170px;
+  display:block!important;
+  text-align:center;
+  padding:18px 14px!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.94)!important;
+  border:1px solid rgba(184,137,63,.18)!important;
+  box-shadow:0 10px 24px rgba(86,62,27,.08);
+}
+.howNum{
+  margin:0 auto 12px;
+  width:38px!important;
+  height:38px!important;
+  border-radius:50%!important;
+  background:linear-gradient(135deg,#c99d54,#9a6d2c)!important;
+  color:#fff!important;
+  border:0!important;
+}
+.howLine{
+  color:var(--museum-navy)!important;
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:17px!important;
+}
+.howSub{color:#6f6a61!important;line-height:1.65!important;}
+
+/* 主要操作入口：保留原本完整功能，只改成學術金色系 */
+.finalReminder{
+  margin:24px auto 10px!important;
+  color:var(--museum-red)!important;
+}
+.hero{
+  margin-top:10px!important;
+  border-radius:24px!important;
+  background:linear-gradient(135deg,#203d59,#31566f)!important;
+  border:1px solid rgba(184,137,63,.28)!important;
+  box-shadow:var(--museum-shadow)!important;
+}
+.heroTitle{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;}
+.btnPrimary{
+  background:linear-gradient(135deg,#d4a75e,#aa7934)!important;
+  color:#fff!important;
+}
+.btnSoftGpt{
+  background:#fffdf7!important;
+  color:#214761!important;
+}
+#termsAgree:checked + span{
+  background:rgba(255,255,255,.12)!important;
+  color:#fff!important;
+}
+
+/* 後面工具區保留原本版型，只把標題色收斂，避免與首頁風格衝突 */
+.guideCard,.categoryBuilder,.promptBuilder,.precisionBuilder{
+  background:rgba(255,255,255,.96)!important;
+}
+.guideCard h2,.categoryBuilder h2,.promptBuilder h2,.precisionBuilder h2,.precisionCard h3{
+  color:#4f46e5!important;
+}
+
+/* 響應式 */
+@media(max-width:900px){
+  .termsBody{grid-template-columns:1fr;}
+  .termsBody h3:nth-of-type(n),
+  .termsBody h3:nth-of-type(n)+ul{grid-column:1!important;}
+  .howSteps{grid-template-columns:1fr 1fr!important;}
+  .introText h2:before{font-size:38px;}
+}
+@media(max-width:640px){
+  .wrap{padding-left:10px!important;padding-right:10px!important;}
+  .introBanner{min-height:470px;border-radius:0 0 22px 22px;}
+  .introInner{min-height:470px;padding:40px 24px!important;}
+  .introText{max-width:100%;}
+  .introText h2:before{font-size:33px;}
+  .introText p:nth-of-type(1)::before{font-size:18px;}
+  .warnStrip,.termsSection,.howCard{border-radius:20px!important;padding:22px 16px!important;}
+  .warnTitle{font-size:25px!important;}
+  .termsTitle{font-size:24px!important;}
+  .howTitle{font-size:28px!important;}
+  .howSteps{grid-template-columns:1fr!important;}
+  .howStep{min-height:auto;}
+}
+</style>
+
 </head>
 
 <body>
