@@ -1230,7 +1230,7 @@ body{background:radial-gradient(780px 430px at 8% 2%,rgba(56,189,248,.20),transp
           <div class="howNum">1</div>
           <div>
             <div class="howLine"><strong>複製啟動指令</strong></div>
-            <div class="howSub">勾選同意後，按下「複製啟動指令」，系統會即時產生一次性安全連結。</div>
+            <div class="howSub">勾選同意後，按下「複製啟動指令」，系統會複製固定的檢核啟動指令。</div>
           </div>
         </li>
 
@@ -1246,7 +1246,7 @@ body{background:radial-gradient(780px 430px at 8% 2%,rgba(56,189,248,.20),transp
           <div class="howNum">3</div>
           <div>
             <div class="howLine"><strong>貼上啟動指令，並同時上傳小論文 PDF</strong></div>
-            <div class="howSub">請在 120 秒內完成貼上並送出，建議在同一則訊息中一起附上 PDF。</div>
+            <div class="howSub">請貼上啟動指令並送出，建議在同一則訊息中一起附上 PDF。</div>
           </div>
         </li>
 
@@ -1282,7 +1282,7 @@ body{background:radial-gradient(780px 430px at 8% 2%,rgba(56,189,248,.20),transp
 
           <p class="heroDesc">
             請先複製啟動指令，再立即開啟 ChatGPT。
-            系統會產生 120 秒有效的一次性安全連結；將啟動指令與小論文 PDF 一起送出後，AI 會自動完成檢核準備。
+            系統會使用固定的檢核規則網址；將啟動指令與小論文 PDF 一起送出後，AI 會自動完成檢核準備。
           </p>
 
           <p class="heroDesc">
@@ -1452,16 +1452,16 @@ body{background:radial-gradient(780px 430px at 8% 2%,rgba(56,189,248,.20),transp
   </div>
 
   <script>
-const TOKEN_ISSUE_URL = "https://check.miracle-mind.org/issue";
+const PROMPT_URL = "https://thesis-format-checker-tw.web.app/rules/thesis-prompt.txt";
 const CHATGPT_URL = "https://chatgpt.com/";
 
 const REQUIRED_RULESET_ID =
   "THESIS-MASTER-20260716-V1";
 
-function buildStartPrompt(promptUrl) {
+function buildStartPrompt() {
   return `請先完整讀取下列系統檢核設定：
 
-${promptUrl}
+${PROMPT_URL}
 
 讀取成功後，必須先確認規則內容中存在完全相同的識別碼：
 
@@ -1489,10 +1489,10 @@ PDF 讀取完成後，最後一行必須顯示：
 1. 無法完整讀取上述系統檢核設定；
 2. 找不到 RULESET_ID；
 3. RULESET_ID 不是 ${REQUIRED_RULESET_ID}；
-4. 規則網址已逾期、失效或讀取不完整；
+4. 規則網址讀取失敗或內容不完整；
 5. 無法確認已取得完整規則內容；
 
-必須立即停止檢核並明確告知使用者重新取得新的啟動指令。
+必須立即停止檢核並明確告知使用者重新操作。
 
 不得自行推測、補足或使用模型既有知識替代規則。
 不得自行建立、重排、改寫或猜測第 1～19 項檢核內容。
@@ -1524,59 +1524,26 @@ syncMainButtons();
 async function copyStartPrompt(){
   if (!termsAgree.checked) return;
 
-  const originalText = copyStartBtn.textContent;
-  copyStartBtn.disabled = true;
-  copyStartBtn.textContent = "⏳ 正在產生安全啟動指令…";
-  copyStatus.className = "copyStatus";
-  copyStatus.textContent = "正在建立 120 秒一次性檢核連結，請稍候…";
+  const startPrompt = buildStartPrompt();
 
   try {
-    const res = await fetch(TOKEN_ISSUE_URL, {
-      method: "POST",
-      cache: "no-store"
-    });
-
-    if (!res.ok) {
-      throw new Error(`Token issue failed: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    if (!data?.ok || !data?.url) {
-      throw new Error("Invalid token response");
-    }
-
-    const startPrompt = buildStartPrompt(data.url);
-
-    try {
-      await navigator.clipboard.writeText(startPrompt);
-    } catch (clipErr) {
-      const ta = document.createElement("textarea");
-      ta.value = startPrompt;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      document.execCommand("copy");
-      ta.remove();
-    }
-
-    copyStatus.className = "copyStatus ok";
-    copyStatus.textContent =
-      "✅ 安全啟動指令已複製。請在 120 秒內開啟 ChatGPT、貼上指令並同時附上 PDF。";
-
-  } catch (err) {
-    console.error(err);
-    copyStatus.className = "copyStatus warn";
-    copyStatus.textContent =
-      "⚠️ 暫時無法建立安全啟動指令，請稍後再試。";
-  } finally {
-    copyStartBtn.textContent = originalText;
-    copyStartBtn.disabled = !termsAgree.checked;
+    await navigator.clipboard.writeText(startPrompt);
+  } catch (clipErr) {
+    const ta = document.createElement("textarea");
+    ta.value = startPrompt;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
   }
-}
 
+  copyStatus.className = "copyStatus ok";
+  copyStatus.textContent =
+    "✅ 啟動指令已複製。請開啟 ChatGPT、貼上指令並同時附上 PDF。";
+}
 
 
 const COUNTER_API_BASE =
